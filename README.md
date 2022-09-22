@@ -14,5 +14,5 @@ The implement of the sequence encoder follows [BERT4Rec](https://github.com/jayw
 
 Training:
 ```
-python train.py --use_memory_loss_tail -copy_tail_label
+python --template train_bert main.py --use_memory_loss_tail -copy_tail_label
 ```
