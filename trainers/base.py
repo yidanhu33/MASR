@@ -25,8 +25,7 @@ class AbstractTrainer(metaclass=ABCMeta):
         self.val_loader,self.val_loader_head,self.val_loader_tail = val_loader
         self.test_loader,self.test_loader_head,self.test_loader_tail = test_loader
         self.optimizer = self._create_optimizer()
-        if args.enable_lr_schedule:
-            self.lr_scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=args.decay_step, gamma=args.gamma)
+        self.lr_scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=args.decay_step, gamma=args.gamma)
 
         self.num_epochs = args.num_epochs
         self.metric_ks = args.metric_ks
@@ -89,8 +88,8 @@ class AbstractTrainer(metaclass=ABCMeta):
             loss = self.calculate_loss(batch,cum_batch_num, xbm_mode = 'train')
             loss.backward()
             self.optimizer.step()
-            if self.args.enable_lr_schedule:
-                self.lr_scheduler.step()
+   
+            self.lr_scheduler.step()
             average_meter_set.update('loss', loss.item())
             accum_iter += batch_size
   
